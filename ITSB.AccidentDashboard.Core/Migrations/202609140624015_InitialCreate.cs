@@ -73,8 +73,21 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Code = c.String(),
-                        Name = c.String(),
+                        PlantCode = c.String(nullable: false, maxLength: 10),
+                        Name = c.String(nullable: false, maxLength: 100),
+                        PlantGroupId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.PlantGroups", t => t.PlantGroupId, cascadeDelete: true)
+                .Index(t => t.PlantGroupId);
+            
+            CreateTable(
+                "dbo.PlantGroups",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Label = c.String(),
+                        DisplayName = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -101,15 +114,18 @@
         {
             DropForeignKey("dbo.MonthlyManHours", "PlantId", "dbo.Plants");
             DropForeignKey("dbo.AccidentIncidents", "PlantId", "dbo.Plants");
+            DropForeignKey("dbo.Plants", "PlantGroupId", "dbo.PlantGroups");
             DropForeignKey("dbo.AccidentIncidents", "InjuryTypeId", "dbo.InjuryTypes");
             DropForeignKey("dbo.AccidentIncidents", "BodyPartId", "dbo.BodyParts");
             DropForeignKey("dbo.AccidentIncidents", "AccidentCauseId", "dbo.AccidentCauses");
             DropIndex("dbo.MonthlyManHours", new[] { "PlantId" });
+            DropIndex("dbo.Plants", new[] { "PlantGroupId" });
             DropIndex("dbo.AccidentIncidents", new[] { "InjuryTypeId" });
             DropIndex("dbo.AccidentIncidents", new[] { "BodyPartId" });
             DropIndex("dbo.AccidentIncidents", new[] { "AccidentCauseId" });
             DropIndex("dbo.AccidentIncidents", new[] { "PlantId" });
             DropTable("dbo.MonthlyManHours");
+            DropTable("dbo.PlantGroups");
             DropTable("dbo.Plants");
             DropTable("dbo.InjuryTypes");
             DropTable("dbo.BodyParts");

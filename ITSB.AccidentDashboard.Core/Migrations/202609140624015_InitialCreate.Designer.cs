@@ -13,7 +13,7 @@ namespace ITSB.AccidentDashboard.Core.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202609110152093_InitialCreate"; }
+            get { return "202609140624015_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

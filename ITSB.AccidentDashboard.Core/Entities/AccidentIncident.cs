@@ -1,29 +1,6 @@
-﻿public class Plant
+﻿namespace ITSB.AccidentDashboard.Core.Entities
 {
-    public int Id { get; set; }
-    public string Code { get; set; }   // "P5"
-    public string Name { get; set; }   // "Plant 5"
-}
-
-public class AccidentCause
-{
-    public int Id { get; set; }
-    public string Description { get; set; }
-}
-
-public class BodyPart
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-}
-
-public class InjuryType
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-}
-
-public class AccidentIncident
+    public class AccidentIncident
 {
     public int Id { get; set; }
     public string WorkerName { get; set; }
@@ -51,16 +28,4 @@ public class AccidentIncident
     public bool IsRecordableCase { get; set; }
     public int LostWorkDays { get; set; }
 }
-
-public class MonthlyManHours
-{
-    public int Id { get; set; }
-    public int PlantId { get; set; }
-    public virtual Plant Plant { get; set; }
-    public int Year { get; set; }
-    public int Month { get; set; }
-    public int DirectLaborHeadcount { get; set; }
-    public int DirectLaborHours { get; set; }
-    public int IndirectLaborHeadcount { get; set; }
-    public int IndirectLaborHours { get; set; }
 }

@@ -51,11 +51,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\AccidentCause.cs" />
+    <Compile Include="Entities\AccidentIncident.cs" />
+    <Compile Include="Entities\BodyPart.cs" />
+    <Compile Include="Entities\InjuryType.cs" />
+    <Compile Include="Entities\MonthlyManHours.cs" />
+    <Compile Include="Entities\Plant.cs" />
+    <Compile Include="Entities\PlantGroup.cs" />
     <Compile Include="EshDbCotext.cs" />
-    <Compile Include="Migrations\202609110152093_InitialCreate.cs" />
-    <Compile Include="Migrations\202609110152093_InitialCreate.Designer.cs">
-      <DependentUpon>202609110152093_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202609140624015_InitialCreate.cs" />
+    <Compile Include="Migrations\202609140624015_InitialCreate.Designer.cs">
+      <DependentUpon>202609140624015_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,8 +72,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202609110152093_InitialCreate.resx">
-      <DependentUpon>202609110152093_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202609140624015_InitialCreate.resx">
+      <DependentUpon>202609140624015_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
