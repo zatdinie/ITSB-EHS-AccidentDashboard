@@ -1,12 +1,12 @@
-﻿@model Plant
+﻿@model ITSB.AccidentDashboard.Core.Entities.Plant
 @{ ViewBag.Title = "Delete Plant"; }
 
 <h2>Delete Plant</h2>
 <p>Are you sure you want to delete <strong>@Model.Name</strong>?</p>
 @using (Html.BeginForm())
 {
-	@Html.AntiForgeryToken()
-	@Html.HiddenFor(m => m.Id)
-	<button type="submit" class="btn btn-danger">Delete</button>
-	@Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+    <button type="submit" class="btn btn-danger">Delete</button>
+    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
 }
