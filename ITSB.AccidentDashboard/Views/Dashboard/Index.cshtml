@@ -1,0 +1,57 @@
+﻿@model ITSB.AccidentDashboard.Web.Models.DashboardViewModel
+@{ ViewBag.Title = "Dashboard"; }
+
+<div class="esh-subheader">YEAR @Model.Year | DASHBOARD (ALL PLANT)</div>
+
+<div class="container-fluid" style="padding:20px;">
+    <div class="row">
+        <div class="col-md-3"><div class="kpi-card"><div class="kpi-label">Total Accident Cases</div><div class="kpi-value">@Model.TotalAccidentCases</div></div></div>
+        <div class="col-md-3"><div class="kpi-card"><div class="kpi-label">Total First Aid Injuries Case</div><div class="kpi-value highlight">@Model.TotalFirstAidCases</div></div></div>
+        <div class="col-md-3"><div class="kpi-card"><div class="kpi-label">Total of Work Lost Day</div><div class="kpi-value">@Model.TotalLostWorkDay</div></div></div>
+        <div class="col-md-3"><div class="kpi-card"><div class="kpi-label">Total Recordable Work Injury & Illness</div><div class="kpi-value">@Model.TotalRecordableCases</div></div></div>
+    </div>
+    <br />
+    <div class="row">
+        @foreach (var g in Model.CasesByPlantGroup)
+        {
+            <div class="col-md-3">
+                <div class="plant-card"><span>@g.DisplayName</span><span class="plant-value">@g.Count</span></div>
+            </div>
+        }
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6"><div class="chart-card"><h4>Accident Case By Plant</h4><canvas id="chartByPlant"></canvas></div></div>
+        <div class="col-md-6"><div class="chart-card"><h4>Accident Analysis by Body Part</h4><canvas id="chartByBodyPart"></canvas></div></div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12"><div class="chart-card-dark"><h4>Total Accident Per Month</h4><canvas id="chartByMonth"></canvas></div></div>
+    </div>
+</div>
+
+@section scripts {
+<script>
+    var plantLabels = @Html.Raw(Json.Encode(Model.CasesByPlant.Select(p => p.PlantCode)));
+    var plantData = @Html.Raw(Json.Encode(Model.CasesByPlant.Select(p => p.Count)));
+    new Chart(document.getElementById('chartByPlant'), {
+        type: 'bar',
+        data: { labels: plantLabels, datasets: [{ label: 'Cases', data: plantData, backgroundColor: '#5B9BD5' }] },
+        options: { indexAxis: 'y', plugins: { legend: { display: false } } }
+    });
+
+    var bodyPartLabels = @Html.Raw(Json.Encode(Model.CasesByBodyPart.Select(b => b.Name)));
+    var bodyPartData = @Html.Raw(Json.Encode(Model.CasesByBodyPart.Select(b => b.Count)));
+    new Chart(document.getElementById('chartByBodyPart'), {
+        type: 'doughnut',
+        data: { labels: bodyPartLabels, datasets: [{ data: bodyPartData, backgroundColor: ['#5B9BD5','#ED7D31','#A5A5A5','#FFC000','#4472C4'] }] }
+    });
+
+    var monthLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    new Chart(document.getElementById('chartByMonth'), {
+        type: 'line',
+        data: { labels: monthLabels, datasets: [{ label: 'Cases', data: @Html.Raw(Json.Encode(Model.CasesByMonth)), borderColor: '#5B9BD5', backgroundColor: 'rgba(91,155,213,0.3)', fill: true, tension: 0.3 }] },
+        options: { scales: { x: { ticks: { color: '#fff' } }, y: { ticks: { color: '#fff' } } }, plugins: { legend: { labels: { color: '#fff' } } } }
+    });
+</script>
+}
