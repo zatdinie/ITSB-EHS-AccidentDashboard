@@ -65,7 +65,9 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AccidentIncidentRepository.cs" />
     <Compile Include="Repositories\DashboardRepository.cs" />
+    <Compile Include="Repositories\LookupRepository.cs" />
     <Compile Include="Repositories\PlantRepository.cs" />
   </ItemGroup>
   <ItemGroup>
