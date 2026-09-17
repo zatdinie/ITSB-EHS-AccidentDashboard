@@ -15,12 +15,20 @@
     </div>
     <div class="esh-nav">
         @Html.ActionLink("Dashboard", "Index", "Dashboard")
-        @Html.ActionLink("Status By Plant", "Index", "Plant")
-        @Html.ActionLink("Accident Analysis", "Index", "Dashboard")
-        @Html.ActionLink("Lost Work Day Rate", "Index", "Dashboard")
+        @Html.ActionLink("Status By Plant", "Index", "StatusByPlant")
+        @Html.ActionLink("Accident Analysis", "Index", "AccidentAnalysis")
+        @Html.ActionLink("Lost Work Day Rate", "Index", "LWR")
         @Html.ActionLink("Accident Summary", "Index", "AccidentIncident")
     </div>
-
+    <div class="esh-subheader" style="text-align:right; padding-right:20px;">
+        <label style="margin-right:8px;">Year:</label>
+        <select onchange="window.location.href = window.location.pathname + '?year=' + this.value;">
+            @for (int y = DateTime.Now.Year; y >= DateTime.Now.Year - 4; y--)
+            {
+                <option value="@y" selected="@(y == (ViewBag.Year ?? DateTime.Now.Year))">@y</option>
+            }
+        </select>
+    </div>
     <div class="container-fluid body-content">
         @RenderBody()
         <hr />

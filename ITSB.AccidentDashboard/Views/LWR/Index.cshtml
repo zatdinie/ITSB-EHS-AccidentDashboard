@@ -1,0 +1,42 @@
+﻿@using System.Linq
+@model System.Collections.Generic.List<ITSB.AccidentDashboard.Core.Repositories.MonthlyRate>
+@{ ViewBag.Title = "Lost Work Day Rate"; }
+
+<div class="esh-subheader">YEAR @ViewBag.Year | LOST WORK DAY RATE</div>
+
+<p>@Html.ActionLink("Manage Man Hours Data", "Index", "MonthlyManHours", null, new { @class = "btn btn-default" })</p>
+<div class="container-fluid" style="padding:20px;">
+    <div class="chart-card-dark">
+        <h4>Lost Workday Injury Rate (LWDI) By Month</h4>
+        <canvas id="chartLwdi"></canvas>
+    </div>
+    <br />
+    <div class="chart-card">
+        <table class="table table-striped">
+            <tr><th>Month</th><th>Hours Worked</th><th>LWD Cases</th><th>Recordable Cases</th><th>LWDI</th><th>TCIR</th></tr>
+            @foreach (var r in Model)
+            {
+                <tr>
+                    <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(r.Month)</td>
+                    <td>@r.TotalHours</td>
+                    <td>@r.LostWorkDayCases</td>
+                    <td>@r.RecordableCases</td>
+                    <td>@r.Lwdi.ToString("0.00")</td>
+                    <td>@r.Tcir.ToString("0.00")</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+@section scripts {
+<script>
+    var monthLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var lwdiData = @Html.Raw(Json.Encode(Model.Select(r => r.Lwdi)));
+    new Chart(document.getElementById('chartLwdi'), {
+        type: 'line',
+        data: { labels: monthLabels, datasets: [{ label: 'LWDI', data: lwdiData, borderColor: '#5B9BD5', backgroundColor: 'rgba(91,155,213,0.3)', fill: true, tension: 0.3 }] },
+        options: { scales: { x: { ticks: { color: '#fff' } }, y: { ticks: { color: '#fff' } } }, plugins: { legend: { labels: { color: '#fff' } } } }
+    });
+</script>
+}

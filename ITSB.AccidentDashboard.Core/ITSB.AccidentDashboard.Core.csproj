@@ -65,10 +65,14 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AccidentAnalysisRepository.cs" />
     <Compile Include="Repositories\AccidentIncidentRepository.cs" />
     <Compile Include="Repositories\DashboardRepository.cs" />
     <Compile Include="Repositories\LookupRepository.cs" />
+    <Compile Include="Repositories\LwrRepository.cs" />
+    <Compile Include="Repositories\MonthlyManHoursRepository.cs" />
     <Compile Include="Repositories\PlantRepository.cs" />
+    <Compile Include="Repositories\StatusByPlantRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

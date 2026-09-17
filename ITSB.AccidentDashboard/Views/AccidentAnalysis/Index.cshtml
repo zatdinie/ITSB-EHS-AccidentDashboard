@@ -1,0 +1,33 @@
+﻿@model ITSB.AccidentDashboard.Core.Repositories.AccidentAnalysisData
+@{ ViewBag.Title = "Accident Analysis"; }
+
+<div class="esh-subheader">YEAR @ViewBag.Year | ACCIDENT ANALYSIS</div>
+
+<div class="container-fluid" style="padding:20px;">
+    <div class="row">
+        <div class="col-md-4"><div class="chart-card"><h4>By Body Part</h4><canvas id="chartBodyPart"></canvas></div></div>
+        <div class="col-md-4"><div class="chart-card"><h4>By Accident Cause</h4><canvas id="chartCause"></canvas></div></div>
+        <div class="col-md-4"><div class="chart-card"><h4>By Injury Type</h4><canvas id="chartInjury"></canvas></div></div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6"><div class="chart-card"><h4>By Gender</h4><canvas id="chartGender"></canvas></div></div>
+        <div class="col-md-6"><div class="chart-card"><h4>By Employment Status</h4><canvas id="chartEmployment"></canvas></div></div>
+    </div>
+</div>
+
+@section scripts {
+<script>
+    function makeDoughnut(id, labels, data) {
+        new Chart(document.getElementById(id), {
+            type: 'doughnut',
+            data: { labels: labels, datasets: [{ data: data, backgroundColor: ['#5B9BD5','#ED7D31','#A5A5A5','#FFC000','#4472C4','#70AD47'] }] }
+        });
+    }
+    makeDoughnut('chartBodyPart', @Html.Raw(Json.Encode(Model.ByBodyPart.Select(x => x.Name))), @Html.Raw(Json.Encode(Model.ByBodyPart.Select(x => x.Count))));
+    makeDoughnut('chartCause', @Html.Raw(Json.Encode(Model.ByCause.Select(x => x.Name))), @Html.Raw(Json.Encode(Model.ByCause.Select(x => x.Count))));
+    makeDoughnut('chartInjury', @Html.Raw(Json.Encode(Model.ByInjuryType.Select(x => x.Name))), @Html.Raw(Json.Encode(Model.ByInjuryType.Select(x => x.Count))));
+    makeDoughnut('chartGender', @Html.Raw(Json.Encode(Model.ByGender.Select(x => x.Name))), @Html.Raw(Json.Encode(Model.ByGender.Select(x => x.Count))));
+    makeDoughnut('chartEmployment', @Html.Raw(Json.Encode(Model.ByEmploymentStatus.Select(x => x.Name))), @Html.Raw(Json.Encode(Model.ByEmploymentStatus.Select(x => x.Count))));
+</script>
+}

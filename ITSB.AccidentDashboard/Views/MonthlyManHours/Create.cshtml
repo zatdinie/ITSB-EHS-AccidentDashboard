@@ -1,0 +1,52 @@
+﻿@model ITSB.AccidentDashboard.Core.Entities.MonthlyManHours
+@{ ViewBag.Title = "Add Man Hours Entry"; }
+
+<h2>Add Man Hours Entry</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(m => m.PlantId, "Plant")
+            @Html.DropDownList("PlantId", (SelectList)ViewBag.Plants, "-- Select Plant --", new { @class = "form-control" })
+        </div>
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(m => m.Year)
+            @Html.TextBoxFor(m => m.Year, new { @class = "form-control" })
+        </div>
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(m => m.Month)
+            @Html.DropDownListFor(m => m.Month, new List<SelectListItem> {
+                new SelectListItem{Text="January",Value="1"}, new SelectListItem{Text="February",Value="2"},
+                new SelectListItem{Text="March",Value="3"}, new SelectListItem{Text="April",Value="4"},
+                new SelectListItem{Text="May",Value="5"}, new SelectListItem{Text="June",Value="6"},
+                new SelectListItem{Text="July",Value="7"}, new SelectListItem{Text="August",Value="8"},
+                new SelectListItem{Text="September",Value="9"}, new SelectListItem{Text="October",Value="10"},
+                new SelectListItem{Text="November",Value="11"}, new SelectListItem{Text="December",Value="12"}
+            }, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 form-group">
+            @Html.LabelFor(m => m.DirectLaborHeadcount)
+            @Html.TextBoxFor(m => m.DirectLaborHeadcount, new { @class = "form-control" })
+        </div>
+        <div class="col-md-3 form-group">
+            @Html.LabelFor(m => m.DirectLaborHours)
+            @Html.TextBoxFor(m => m.DirectLaborHours, new { @class = "form-control" })
+        </div>
+        <div class="col-md-3 form-group">
+            @Html.LabelFor(m => m.IndirectLaborHeadcount)
+            @Html.TextBoxFor(m => m.IndirectLaborHeadcount, new { @class = "form-control" })
+        </div>
+        <div class="col-md-3 form-group">
+            @Html.LabelFor(m => m.IndirectLaborHours)
+            @Html.TextBoxFor(m => m.IndirectLaborHours, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+}

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ITSB.AccidentDashboard.Core.Entities.MonthlyManHours>
+@{ ViewBag.Title = "Monthly Man Hours"; }
+
+<h2>Monthly Man Hours</h2>
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+<p>@Html.ActionLink("Add Entry", "Create", null, new { @class = "btn btn-primary" })</p>
+<table class="table table-striped">
+    <tr><th>Year</th><th>Month</th><th>Plant</th><th>DL Headcount</th><th>DL Hours</th><th>IDL Headcount</th><th>IDL Hours</th><th></th></tr>
+    @foreach (var m in Model)
+    {
+        <tr>
+            <td>@m.Year</td>
+            <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m.Month)</td>
+            <td>@(m.Plant != null ? m.Plant.PlantCode : "-")</td>
+            <td>@m.DirectLaborHeadcount</td>
+            <td>@m.DirectLaborHours</td>
+            <td>@m.IndirectLaborHeadcount</td>
+            <td>@m.IndirectLaborHours</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = m.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = m.Id })
+            </td>
+        </tr>
+    }
+</table>

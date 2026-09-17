@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ITSB.AccidentDashboard.Core.Repositories.PlantStatusResult>
+@{ ViewBag.Title = "Status By Plant"; }
+
+<div class="esh-subheader">YEAR @ViewBag.Year | STATUS BY PLANT</div>
+
+<div class="container-fluid" style="padding:20px;">
+    <div class="chart-card">
+        <table class="table table-striped">
+            <tr>
+                <th>Plant</th><th>Total Cases</th><th>First Aid</th><th>Lost Work Day Cases</th><th>Recordable</th><th>Total Lost Work Days</th>
+            </tr>
+            @foreach (var r in Model)
+            {
+                <tr>
+                    <td>@r.PlantCode - @r.PlantName</td>
+                    <td>@r.TotalCases</td>
+                    <td>@r.FirstAidCases</td>
+                    <td>@r.LostWorkDayCases</td>
+                    <td>@r.RecordableCases</td>
+                    <td>@r.TotalLostWorkDays</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

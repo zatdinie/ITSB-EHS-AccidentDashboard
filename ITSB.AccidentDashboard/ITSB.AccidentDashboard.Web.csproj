@@ -127,10 +127,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccidentAnalysisController.cs" />
     <Compile Include="Controllers\AccidentIncidentController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LWRController.cs" />
+    <Compile Include="Controllers\MonthlyManHoursController.cs" />
     <Compile Include="Controllers\PlantController.cs" />
+    <Compile Include="Controllers\StatusByPlantController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -194,6 +198,15 @@
     <Content Include="Views\AccidentIncident\Index.cshtml" />
     <Content Include="Views\AccidentIncident\Create.cshtml" />
     <Content Include="Views\AccidentIncident\Delete.cshtml" />
+    <Content Include="Views\StatusByPlant\Index.cshtml" />
+    <Content Include="Views\AccidentAnalysis\Index.cshtml" />
+    <Content Include="Views\LWR\Index.cshtml" />
+    <Content Include="Views\Plant\Edit.cshtml" />
+    <Content Include="Views\AccidentIncident\Edit.cshtml" />
+    <Content Include="Views\MonthlyManHours\Index.cshtml" />
+    <Content Include="Views\MonthlyManHours\Create.cshtml" />
+    <Content Include="Views\MonthlyManHours\Edit.cshtml" />
+    <Content Include="Views\MonthlyManHours\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
