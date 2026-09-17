@@ -1,102 +1,120 @@
 ﻿@model ITSB.AccidentDashboard.Web.Models.AccidentIncidentViewModel
-@{ ViewBag.Title = "Report New Incident"; }
+@{ ViewBag.Title = "Edit Incident"; }
 
-<h2>Report New Incident</h2>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.Id)
-    @Html.ValidationSummary(true)
+<div class="container-fluid" style="padding:20px;">
+    <div class="page-title-bar"><h2>Edit Incident</h2></div>
 
-    <div class="row">
-        <div class="col-md-6 form-group">
-            @Html.LabelFor(m => m.WorkerName)
-            @Html.TextBoxFor(m => m.WorkerName, new { @class = "form-control" })
-        </div>
-        <div class="col-md-6 form-group">
-            @Html.LabelFor(m => m.EmployeeId)
-            @Html.TextBoxFor(m => m.EmployeeId, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 form-group">
-            @Html.LabelFor(m => m.IcPassportNo)
-            @Html.TextBoxFor(m => m.IcPassportNo, new { @class = "form-control" })
-        </div>
-        <div class="col-md-6 form-group">
-            @Html.LabelFor(m => m.PlantId)
-            @Html.DropDownListFor(m => m.PlantId, Model.PlantOptions, "-- Select Plant --", new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 form-group">
-            @Html.LabelFor(m => m.Gender)
-            @Html.DropDownListFor(m => m.Gender, new List<SelectListItem> {
-                new SelectListItem { Text = "Male", Value = "Male" },
-                new SelectListItem { Text = "Female", Value = "Female" }
-            }, "-- Select --", new { @class = "form-control" })
-        </div>
-        <div class="col-md-4 form-group">
-            @Html.LabelFor(m => m.Age)
-            @Html.TextBoxFor(m => m.Age, new { @class = "form-control" })
-        </div>
-        <div class="col-md-4 form-group">
-            @Html.LabelFor(m => m.Nationality)
-            @Html.TextBoxFor(m => m.Nationality, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 form-group">
-            @Html.LabelFor(m => m.EmploymentStatus)
-            @Html.DropDownListFor(m => m.EmploymentStatus, new List<SelectListItem> {
-                new SelectListItem { Text = "Employee", Value = "Employee" },
-                new SelectListItem { Text = "Intern", Value = "Intern" },
-                new SelectListItem { Text = "Contractor", Value = "Contractor" }
-            }, "-- Select --", new { @class = "form-control" })
-        </div>
-        <div class="col-md-3 form-group">
-            @Html.LabelFor(m => m.DateOfOccurrence)
-            @Html.TextBoxFor(m => m.DateOfOccurrence, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-        </div>
-        <div class="col-md-3 form-group">
-            @Html.LabelFor(m => m.TimeOfOccurrence)
-            @Html.TextBoxFor(m => m.TimeOfOccurrence, new { @class = "form-control", type = "time" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.HowAccidentHappened)
-        @Html.TextAreaFor(m => m.HowAccidentHappened, new { @class = "form-control", rows = 3 })
-    </div>
-    <div class="row">
-        <div class="col-md-4 form-group">
-            @Html.LabelFor(m => m.AccidentCauseId)
-            @Html.DropDownListFor(m => m.AccidentCauseId, Model.AccidentCauseOptions, "-- Select --", new { @class = "form-control" })
-        </div>
-        <div class="col-md-4 form-group">
-            @Html.LabelFor(m => m.BodyPartId)
-            @Html.DropDownListFor(m => m.BodyPartId, Model.BodyPartOptions, "-- Select --", new { @class = "form-control" })
-        </div>
-        <div class="col-md-4 form-group">
-            @Html.LabelFor(m => m.InjuryTypeId)
-            @Html.DropDownListFor(m => m.InjuryTypeId, Model.InjuryTypeOptions, "-- Select --", new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 checkbox">
-            <label>@Html.CheckBoxFor(m => m.IsFirstAidCase) @Html.DisplayNameFor(m => m.IsFirstAidCase)</label>
-        </div>
-        <div class="col-md-4 checkbox">
-            <label>@Html.CheckBoxFor(m => m.IsLostWorkDayCase) @Html.DisplayNameFor(m => m.IsLostWorkDayCase)</label>
-        </div>
-        <div class="col-md-4 checkbox">
-            <label>@Html.CheckBoxFor(m => m.IsRecordableCase) @Html.DisplayNameFor(m => m.IsRecordableCase)</label>
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.LostWorkDays)
-        @Html.TextBoxFor(m => m.LostWorkDays, new { @class = "form-control" })
-    </div>
+    <div class="content-card">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            @Html.ValidationSummary(true)
 
-    <button type="submit" class="btn btn-primary">Save</button>
-    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
-}
+            <h4 style="border-bottom:2px solid #E8ECF3; padding-bottom:8px;">Worker Details</h4>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    @Html.LabelFor(m => m.WorkerName)
+                    @Html.TextBoxFor(m => m.WorkerName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.WorkerName)
+                </div>
+                <div class="col-md-4 form-group">
+                    @Html.LabelFor(m => m.EmployeeId)
+                    @Html.TextBoxFor(m => m.EmployeeId, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EmployeeId)
+                </div>
+                <div class="col-md-4 form-group">
+                    @Html.LabelFor(m => m.IcPassportNo)
+                    @Html.TextBoxFor(m => m.IcPassportNo, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    @Html.LabelFor(m => m.Gender)
+                    @Html.DropDownListFor(m => m.Gender, new List<SelectListItem> {
+                        new SelectListItem { Text = "Male", Value = "Male" },
+                        new SelectListItem { Text = "Female", Value = "Female" }
+                    }, "-- Select --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Gender)
+                </div>
+                <div class="col-md-3 form-group">
+                    @Html.LabelFor(m => m.Age)
+                    @Html.TextBoxFor(m => m.Age, new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(m => m.Age)
+                </div>
+                <div class="col-md-3 form-group">
+                    @Html.LabelFor(m => m.Nationality)
+                    @Html.TextBoxFor(m => m.Nationality, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Nationality)
+                </div>
+                <div class="col-md-3 form-group">
+                    @Html.LabelFor(m => m.EmploymentStatus)
+                    @Html.DropDownListFor(m => m.EmploymentStatus, new List<SelectListItem> {
+                        new SelectListItem { Text = "Employee", Value = "Employee" },
+                        new SelectListItem { Text = "Intern", Value = "Intern" },
+                        new SelectListItem { Text = "Contractor", Value = "Contractor" }
+                    }, "-- Select --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EmploymentStatus)
+                </div>
+            </div>
+
+            <h4 style="border-bottom:2px solid #E8ECF3; padding-bottom:8px; margin-top:24px;">Incident Details</h4>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    @Html.LabelFor(m => m.PlantId)
+                    @Html.DropDownListFor(m => m.PlantId, Model.PlantOptions, "-- Select Plant --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PlantId)
+                </div>
+                <div class="col-md-4 form-group">
+                    @Html.LabelFor(m => m.DateOfOccurrence)
+                    @Html.TextBoxFor(m => m.DateOfOccurrence, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.DateOfOccurrence)
+                </div>
+                <div class="col-md-4 form-group">
+                    @Html.LabelFor(m => m.TimeOfOccurrence)
+                    @Html.TextBoxFor(m => m.TimeOfOccurrence, new { @class = "form-control", type = "time" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.HowAccidentHappened)
+                @Html.TextAreaFor(m => m.HowAccidentHappened, new { @class = "form-control", rows = 3 })
+                @Html.ValidationMessageFor(m => m.HowAccidentHappened)
+            </div>
+
+            <h4 style="border-bottom:2px solid #E8ECF3; padding-bottom:8px; margin-top:24px;">Classification</h4>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    @Html.LabelFor(m => m.AccidentCauseId)
+                    @Html.DropDownListFor(m => m.AccidentCauseId, Model.AccidentCauseOptions, "-- Select --", new { @class = "form-control" })
+                </div>
+                <div class="col-md-4 form-group">
+                    @Html.LabelFor(m => m.BodyPartId)
+                    @Html.DropDownListFor(m => m.BodyPartId, Model.BodyPartOptions, "-- Select --", new { @class = "form-control" })
+                </div>
+                <div class="col-md-4 form-group">
+                    @Html.LabelFor(m => m.InjuryTypeId)
+                    @Html.DropDownListFor(m => m.InjuryTypeId, Model.InjuryTypeOptions, "-- Select --", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 checkbox">
+                    <label>@Html.CheckBoxFor(m => m.IsFirstAidCase) @Html.DisplayNameFor(m => m.IsFirstAidCase)</label>
+                </div>
+                <div class="col-md-3 checkbox">
+                    <label>@Html.CheckBoxFor(m => m.IsLostWorkDayCase) @Html.DisplayNameFor(m => m.IsLostWorkDayCase)</label>
+                </div>
+                <div class="col-md-3 checkbox">
+                    <label>@Html.CheckBoxFor(m => m.IsRecordableCase) @Html.DisplayNameFor(m => m.IsRecordableCase)</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    @Html.LabelFor(m => m.LostWorkDays)
+                    @Html.TextBoxFor(m => m.LostWorkDays, new { @class = "form-control", type = "number" })
+                </div>
+            </div>
+
+            <hr />
+            <button type="submit" class="btn btn-primary">Save</button>
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+        }
+    </div>
+</div>

@@ -75,3 +75,56 @@ body { background-color: var(--bg-light); font-family: 'Segoe UI', sans-serif; }
     padding: 16px;
 }
 .chart-card-dark h4 { text-align: center; color: #fff; }
+
+/* Active nav tab */
+.esh-nav a.active { background-color: var(--chart-blue); font-weight: 600; }
+
+/* Page title bar - replaces plain <h2> on every CRUD page */
+.page-title-bar {
+    background: #fff;
+    border-left: 4px solid var(--chart-blue);
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.page-title-bar h2 { margin: 0; font-size: 20px; color: var(--navy-dark); }
+
+/* Content card - wraps tables and forms consistently */
+.content-card {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--navy-mid) !important;
+    border-color: var(--navy-mid) !important;
+}
+.btn-primary:hover { background-color: var(--chart-blue) !important; border-color: var(--chart-blue) !important; }
+
+/* Tables */
+.table thead, .table > tbody > tr > th {
+    background-color: var(--navy-dark);
+    color: #fff;
+}
+.table > tbody > tr:hover { background-color: #F4F6F9; }
+
+/* Forms */
+.form-control:focus {
+    border-color: var(--chart-blue);
+    box-shadow: 0 0 0 0.2rem rgba(91,155,213,0.25);
+}
+label { font-weight: 600; color: #333; }
+
+/* Alerts */
+.alert-success { background-color: #E7F5EC; border-color: var(--accent-green); color: var(--accent-green); }
+
+.label { padding: 3px 8px; border-radius: 3px; font-size: 11px; margin-right: 3px; display: inline-block; }
+.label-success { background-color: var(--accent-green); color: #fff; }
+.label-warning { background-color: #ED7D31; color: #fff; }
+.label-danger  { background-color: #C0392B; color: #fff; }

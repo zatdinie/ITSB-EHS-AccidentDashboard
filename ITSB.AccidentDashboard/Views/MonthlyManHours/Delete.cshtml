@@ -1,12 +1,20 @@
 ﻿@model ITSB.AccidentDashboard.Core.Entities.MonthlyManHours
 @{ ViewBag.Title = "Delete Entry"; }
 
-<h2>Delete Man Hours Entry</h2>
-<p>Delete @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Model.Month) @Model.Year for this plant?</p>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.Id)
-    <button type="submit" class="btn btn-danger">Delete</button>
-    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
-}
+<div class="container-fluid" style="padding:20px;">
+    <div class="page-title-bar"><h2>Delete Man Hours Entry</h2></div>
+
+    <div class="content-card">
+        <p>
+            Delete the entry for
+            <strong>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Model.Month) @Model.Year</strong>?
+        </p>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            <button type="submit" class="btn btn-danger">Delete</button>
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+        }
+    </div>
+</div>

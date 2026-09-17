@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -13,12 +14,16 @@
         <img src="~/Content/images/logo.png" alt="Company Logo" onerror="this.style.display='none'" />
         <div class="title">ITSB ESH<br />ACCIDENT DASHBOARD</div>
     </div>
+    @{
+    string currentController = ViewContext.RouteData.Values["controller"].ToString();
+    Func<string, string> navClass = ctrl => currentController.Equals(ctrl, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+    }
     <div class="esh-nav">
-        @Html.ActionLink("Dashboard", "Index", "Dashboard")
-        @Html.ActionLink("Status By Plant", "Index", "StatusByPlant")
-        @Html.ActionLink("Accident Analysis", "Index", "AccidentAnalysis")
-        @Html.ActionLink("Lost Work Day Rate", "Index", "LWR")
-        @Html.ActionLink("Accident Summary", "Index", "AccidentIncident")
+        <a href="@Url.Action("Index", "Dashboard")" class="@navClass("Dashboard")">Dashboard</a>
+        <a href="@Url.Action("Index", "StatusByPlant")" class="@navClass("StatusByPlant")">Status By Plant</a>
+        <a href="@Url.Action("Index", "AccidentAnalysis")" class="@navClass("AccidentAnalysis")">Accident Analysis</a>
+        <a href="@Url.Action("Index", "LWR")" class="@navClass("LWR")">Lost Work Day Rate</a>
+        <a href="@Url.Action("Index", "AccidentIncident")" class="@navClass("AccidentIncident")">Accident Summary</a>
     </div>
     <div style="text-align:right; padding:6px 20px; background:#E8ECF3;">
     @Html.ActionLink("⚙ Master Data", "Index", "MasterData")

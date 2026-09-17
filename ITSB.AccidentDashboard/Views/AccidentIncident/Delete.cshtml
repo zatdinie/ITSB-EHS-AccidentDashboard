@@ -1,12 +1,21 @@
 ﻿@model ITSB.AccidentDashboard.Core.Entities.AccidentIncident
 @{ ViewBag.Title = "Delete Incident"; }
 
-<h2>Delete Incident</h2>
-<p>Are you sure you want to delete the incident for <strong>@Model.WorkerName</strong> on @Model.DateOfOccurrence.ToString("dd/MM/yyyy")?</p>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.Id)
-    <button type="submit" class="btn btn-danger">Delete</button>
-    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
-}
+<div class="container-fluid" style="padding:20px;">
+    <div class="page-title-bar"><h2>Delete Incident</h2></div>
+
+    <div class="content-card">
+        <p>
+            Are you sure you want to delete the incident recorded for
+            <strong>@Model.WorkerName</strong> on
+            <strong>@Model.DateOfOccurrence.ToString("dd/MM/yyyy")</strong>?
+        </p>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            <button type="submit" class="btn btn-danger">Delete</button>
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+        }
+    </div>
+</div>

@@ -1,29 +1,55 @@
 ﻿@model IEnumerable<ITSB.AccidentDashboard.Core.Entities.AccidentIncident>
 @{ ViewBag.Title = "Accident Summary"; }
 
-<h2>Accident Summary</h2>
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">@TempData["Success"]</div>
-}
-<p>@Html.ActionLink("Report New Incident", "Create", null, new { @class = "btn btn-primary" })</p>
-<table class="table table-striped">
-    <tr>
-        <th>Date</th><th>Worker</th><th>Plant</th><th>Body Part</th><th>Cause</th><th>Lost Work Days</th><th></th>
-    </tr>
-    @foreach (var i in Model)
+<div class="esh-subheader">ACCIDENT SUMMARY</div>
+
+<div class="container-fluid" style="padding:20px;">
+    <div class="page-title-bar">
+        <h2>Accident Summary</h2>
+        @Html.ActionLink("+ Report New Incident", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+
+    @if (TempData["Success"] != null)
     {
-        <tr>
-            <td>@i.DateOfOccurrence.ToString("dd/MM/yyyy")</td>
-            <td>@i.WorkerName</td>
-            <td>@(i.Plant != null ? i.Plant.PlantCode : "-")</td>
-            <td>@(i.BodyPart != null ? i.BodyPart.Name : "-")</td>
-            <td>@(i.AccidentCause != null ? i.AccidentCause.Description : "-")</td>
-            <td>@i.LostWorkDays</td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = i.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = i.Id })
-            </td>
-        </tr>
+        <div class="alert alert-success">@TempData["Success"]</div>
     }
-</table>
+
+    <div class="content-card" style="overflow-x:auto;">
+        <table class="table">
+            <tr>
+                <th>Date</th>
+                <th>Worker</th>
+                <th>Employee ID</th>
+                <th>Plant</th>
+                <th>Body Part</th>
+                <th>Cause</th>
+                <th>Injury Type</th>
+                <th>Case Type</th>
+                <th>Lost Days</th>
+                <th style="width:180px;"></th>
+            </tr>
+            @foreach (var i in Model)
+            {
+                <tr>
+                    <td>@i.DateOfOccurrence.ToString("dd/MM/yyyy")</td>
+                    <td>@i.WorkerName</td>
+                    <td>@i.EmployeeId</td>
+                    <td>@(i.Plant != null ? i.Plant.Code : "-")</td>
+                    <td>@(i.BodyPart != null ? i.BodyPart.Name : "-")</td>
+                    <td>@(i.AccidentCause != null ? i.AccidentCause.Description : "-")</td>
+                    <td>@(i.InjuryType != null ? i.InjuryType.Name : "-")</td>
+                    <td>
+                        @if (i.IsFirstAidCase) { <span class="label label-success">First Aid</span> }
+                        @if (i.IsLostWorkDayCase) { <span class="label label-warning">LWD</span> }
+                        @if (i.IsRecordableCase) { <span class="label label-danger">Recordable</span> }
+                    </td>
+                    <td>@i.LostWorkDays</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = i.Id }, new { @class = "btn btn-sm btn-default" })
+                        @Html.ActionLink("Delete", "Delete", new { id = i.Id }, new { @class = "btn btn-sm btn-danger" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

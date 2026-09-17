@@ -1,23 +1,31 @@
 ﻿@model IEnumerable<ITSB.AccidentDashboard.Core.Entities.Plant>
 @{ ViewBag.Title = "Plants"; }
 
-<h2>Plants</h2>
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">@TempData["Success"]</div>
-}
-<p>@Html.ActionLink("Create New Plant", "Create")</p>
-<table class="table">
-    <tr><th>Code</th><th>Name</th><th></th></tr>
-    @foreach (var p in Model)
+<div class="container-fluid" style="padding:20px;">
+    <div class="page-title-bar">
+        <h2>Plants</h2>
+        @Html.ActionLink("+ Create New Plant", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+
+    @if (TempData["Success"] != null)
     {
-        <tr>
-            <td>@p.PlantCode</td>
-            <td>@p.Name</td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = p.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = p.Id })
-            </td>
-        </tr>
+        <div class="alert alert-success">@TempData["Success"]</div>
     }
-</table>
+
+    <div class="content-card">
+        <table class="table">
+            <tr><th>Code</th><th>Name</th><th></th></tr>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.PlantCode</td>
+                    <td>@p.Name</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = p.Id }, new { @class = "btn btn-sm btn-default" })
+                        @Html.ActionLink("Delete", "Delete", new { id = p.Id }, new { @class = "btn btn-sm btn-danger" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

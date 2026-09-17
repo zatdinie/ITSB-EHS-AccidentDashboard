@@ -1,11 +1,17 @@
 ﻿@model ITSB.AccidentDashboard.Core.Entities.BodyPart
 @{ ViewBag.Title = "Delete Body Part"; }
-<h2>Delete Body Part</h2>
-<p>Delete <strong>@Model.Name</strong>?</p>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.Id)
-    <button type="submit" class="btn btn-danger">Delete</button>
-    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
-}
+
+<div class="container-fluid" style="padding:20px;">
+    <div class="page-title-bar"><h2>Delete Body Part</h2></div>
+
+    <div class="content-card">
+        <p>Are you sure you want to delete <strong>@Model.Name</strong>?</p>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            <button type="submit" class="btn btn-danger">Delete</button>
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+        }
+    </div>
+</div>
