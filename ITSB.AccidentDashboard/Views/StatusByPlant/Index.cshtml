@@ -1,34 +1,157 @@
-﻿@model IEnumerable<ITSB.AccidentDashboard.Core.Repositories.PlantStatusResult>
+﻿@model ITSB.AccidentDashboard.Web.Models.StatusByPlantViewModel
+@using System.Linq
 @{ ViewBag.Title = "Status By Plant"; }
 
 <div class="esh-subheader dashboard-subheader">
     <span>YEAR&nbsp;</span>
-    <select id="status-year" onchange="window.location.href = window.location.pathname + '?year=' + this.value;">
+    <select id="status-year" aria-label="Select year" onchange="window.location.href = window.location.pathname + '?year=' + this.value;">
         @for (int y = DateTime.Now.Year; y >= DateTime.Now.Year - 4; y--)
         {
-            <option value="@y" selected="@(y == ViewBag.Year)">@y</option>
+            <option value="@y" selected="@(y == Model.Year)">@y</option>
         }
     </select>
     <span>&nbsp;| STATUS BY PLANT</span>
 </div>
 
-<div class="container-fluid" style="padding:20px;">
-    <div class="chart-card">
-        <table class="table table-striped">
-            <tr>
-                <th>Plant</th><th>Total Cases</th><th>First Aid</th><th>Lost Work Day Cases</th><th>Recordable</th><th>Total Lost Work Days</th>
-            </tr>
-            @foreach (var r in Model)
-            {
-                <tr>
-                    <td>@r.PlantCode - @r.PlantName</td>
-                    <td>@r.TotalCases</td>
-                    <td>@r.FirstAidCases</td>
-                    <td>@r.LostWorkDayCases</td>
-                    <td>@r.RecordableCases</td>
-                    <td>@r.TotalLostWorkDays</td>
-                </tr>
-            }
-        </table>
+<div class="container-fluid status-by-plant-page" style="padding:20px;">
+
+    <div class="row status-card-row">
+        <div class="col-md-6">
+            <div class="content-card status-table-card">
+                <h4 style="text-align:center;">Accident Cases According to Plant</h4>
+                <table class="table status-table">
+                    <tr>
+                        <th>Plant</th><th>First Aid</th><th>Lost Work Day Cases</th><th>Recordable</th><th>Total Accident Case</th>
+                    </tr>
+                    @foreach (var r in Model.PlantStatus)
+                    {
+                        <tr>
+                            <td>@r.PlantCode</td>
+                            <td>@r.FirstAidCases</td>
+                            <td>@r.LostWorkDayCases</td>
+                            <td>@r.RecordableCases</td>
+                            <td>@r.TotalCases</td>
+                        </tr>
+                    }
+                    <tr style="background:var(--navy-dark); color:#fff; font-weight:700;">
+                        <td>TOTAL</td>
+                        <td>@Model.PlantStatus.Sum(r => r.FirstAidCases)</td>
+                        <td>@Model.PlantStatus.Sum(r => r.LostWorkDayCases)</td>
+                        <td>@Model.PlantStatus.Sum(r => r.RecordableCases)</td>
+                        <td>@Model.PlantStatus.Sum(r => r.TotalCases)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-card-dark">
+                <h4>Accident Cases According to Plant</h4>
+                <div class="chart-wrap"><canvas id="chartPlantStatus"></canvas></div>
+            </div>
+        </div>
     </div>
+    <br />
+
+    <div class="row status-card-row status-card-row-tall">
+        <div class="col-md-6">
+            <div class="content-card">
+                <h4 style="text-align:center;">Accident Analysis by Body Parts</h4>
+                <table class="table">
+                    <tr>
+                        <th>Hand</th>
+                        <th>Head</th>
+                        <th>Lower Limb</th>
+                        <th>Upper Limb</th>
+                        <th>Others</th>
+                    </tr>
+                    <tr>
+                        <td>@Model.ByBodyPart.Where(b => b.Name == "Hand").Select(b => b.Count).FirstOrDefault()</td>
+                        <td>@Model.ByBodyPart.Where(b => b.Name == "Head").Select(b => b.Count).FirstOrDefault()</td>
+                        <td>@Model.ByBodyPart.Where(b => b.Name == "Lower Limb").Select(b => b.Count).FirstOrDefault()</td>
+                        <td>@Model.ByBodyPart.Where(b => b.Name == "Upper Limb").Select(b => b.Count).FirstOrDefault()</td>
+                        <td>@Model.ByBodyPart.Where(b => b.Name == "Others").Select(b => b.Count).FirstOrDefault()</td>
+                    </tr>
+                </table>
+                <div class="chart-wrap" style="height:220px; margin-top:10px;"><canvas id="chartBodyPart"></canvas></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="content-card" style="overflow-x:auto;">
+                <h4 style="text-align:center;">Recordable Work Injury Cases by Month &amp; Lost Workdays</h4>
+                <table class="table" style="font-size:12px;">
+                    <tr>
+                        <th>Month</th><th>First Aid</th><th>Lost Work Day Cases</th><th>Lost Workdays</th><th>Recordable</th>
+                    </tr>
+                    @foreach (var m in Model.MonthlyBreakdown)
+                    {
+                        <tr>
+                            <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(m.Month)</td>
+                            <td>@m.FirstAidCases</td>
+                            <td>@m.LostWorkDayCases</td>
+                            <td>@m.LostWorkdaysCount</td>
+                            <td>@m.RecordableCases</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-card-dark">
+                <h4>Recordable Work Injury Cases by Month &amp; Number of Lost Workdays</h4>
+                <div class="chart-wrap"><canvas id="chartMonthlyTrend"></canvas></div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@section scripts {
+<script>
+    var commonOpts = { maintainAspectRatio: false, responsive: true };
+
+    var plantLabels = @Html.Raw(Json.Encode(Model.PlantStatus.Select(p => p.PlantCode)));
+    new Chart(document.getElementById('chartPlantStatus'), {
+        type: 'bar',
+        data: {
+            labels: plantLabels,
+            datasets: [
+                { label: 'First Aid', data: @Html.Raw(Json.Encode(Model.PlantStatus.Select(p => p.FirstAidCases))), backgroundColor: '#5B9BD5' },
+                { label: 'Lost Work Day Cases', data: @Html.Raw(Json.Encode(Model.PlantStatus.Select(p => p.LostWorkDayCases))), backgroundColor: '#ED7D31' },
+                { label: 'Recordable', data: @Html.Raw(Json.Encode(Model.PlantStatus.Select(p => p.RecordableCases))), backgroundColor: '#A5A5A5' }
+            ]
+        },
+        options: Object.assign({}, commonOpts, {
+            scales: { x: { ticks: { color: '#fff' } }, y: { ticks: { color: '#fff' } } },
+            plugins: { legend: { labels: { color: '#fff' } } }
+        })
+    });
+
+    var bodyPartLabels = @Html.Raw(Json.Encode(Model.ByBodyPart.Select(b => b.Name)));
+    new Chart(document.getElementById('chartBodyPart'), {
+        type: 'doughnut',
+        data: { labels: bodyPartLabels, datasets: [{ data: @Html.Raw(Json.Encode(Model.ByBodyPart.Select(b => b.Count))), backgroundColor: ['#5B9BD5','#ED7D31','#A5A5A5','#FFC000','#4472C4'] }] },
+        options: Object.assign({}, commonOpts, { plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } })
+    });
+
+    var monthLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    new Chart(document.getElementById('chartMonthlyTrend'), {
+        type: 'line',
+        data: {
+            labels: monthLabels,
+            datasets: [{
+                label: 'Lost Workdays',
+                data: @Html.Raw(Json.Encode(Model.MonthlyBreakdown.Select(m => m.LostWorkdaysCount))),
+                borderColor: '#A5A5A5', backgroundColor: 'rgba(165,165,165,0.2)', fill: true, tension: 0.3
+            }]
+        },
+        options: Object.assign({}, commonOpts, {
+            scales: { x: { ticks: { color: '#fff' } }, y: { ticks: { color: '#fff' } } },
+            plugins: { legend: { labels: { color: '#fff' } } }
+        })
+    });
+</script>
+}

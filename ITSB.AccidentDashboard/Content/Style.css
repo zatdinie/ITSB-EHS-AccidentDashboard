@@ -6,7 +6,7 @@
     --bg-light: #F4F6F9;
 }
 
-body { background-color: var(--bg-light); font-family: 'Segoe UI', sans-serif; }
+body { background-color: var(--bg-light); font-family: 'Segoe UI', sans-serif; text-align: center; }
 
 .esh-header {
     background-color: var(--navy-dark);
@@ -189,6 +189,34 @@ body { background-color: var(--bg-light); font-family: 'Segoe UI', sans-serif; }
     border-radius: 4px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     padding: 20px;
+}
+.status-card-row > [class*="col-"] { display: flex; }
+.status-card-row > [class*="col-"] > .content-card,
+.status-card-row > [class*="col-"] > .chart-card-dark {
+    box-sizing: border-box;
+    height: auto;
+    min-height: 340px;
+    width: 100%;
+}
+.status-card-row-tall > [class*="col-"] > .content-card,
+.status-card-row-tall > [class*="col-"] > .chart-card-dark {
+    min-height: 440px;
+}
+.status-table-card {
+    overflow: visible;
+}
+.status-table-card .status-table {
+    margin-bottom: 0;
+    white-space: normal;
+}
+.status-by-plant-page,
+.status-by-plant-page .table th,
+.status-by-plant-page .table td {
+    text-align: center;
+}
+.status-by-plant-page .table th,
+.status-by-plant-page .table td {
+    vertical-align: middle;
 }
 
 /* Buttons */

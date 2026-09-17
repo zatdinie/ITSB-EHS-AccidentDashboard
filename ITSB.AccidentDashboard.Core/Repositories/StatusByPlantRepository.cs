@@ -41,5 +41,33 @@ namespace ITSB.AccidentDashboard.Core.Repositories
                 .ToList();
             }
         }
+
+        public List<MonthlyRecordable> GetMonthlyBreakdown(int year)
+        {
+            using (var db = new EshDbContext())
+            {
+                var incidents = db.AccidentIncidents
+                    .Where(i => i.DateOfOccurrence.Year == year)
+                    .ToList();
+
+                return Enumerable.Range(1, 12).Select(m => new MonthlyRecordable
+                {
+                    Month = m,
+                    FirstAidCases = incidents.Count(i => i.DateOfOccurrence.Month == m && i.IsFirstAidCase),
+                    LostWorkDayCases = incidents.Count(i => i.DateOfOccurrence.Month == m && i.IsLostWorkDayCase),
+                    LostWorkdaysCount = incidents.Where(i => i.DateOfOccurrence.Month == m).Sum(i => i.LostWorkDays),
+                    RecordableCases = incidents.Count(i => i.DateOfOccurrence.Month == m && i.IsRecordableCase)
+                }).ToList();
+            }
+        }
+    }
+
+    public class MonthlyRecordable
+    {
+        public int Month { get; set; }
+        public int FirstAidCases { get; set; }
+        public int LostWorkDayCases { get; set; }
+        public int LostWorkdaysCount { get; set; }
+        public int RecordableCases { get; set; }
     }
 }
