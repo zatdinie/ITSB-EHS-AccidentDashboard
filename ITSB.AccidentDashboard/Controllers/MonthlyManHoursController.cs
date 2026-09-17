@@ -17,7 +17,7 @@ namespace ITSB.AccidentDashboard.Web.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.Plants = new SelectList(_lookupRepo.GetPlants(), "Id", "Code");
+            ViewBag.Plants = new SelectList(_lookupRepo.GetPlants(), "Id", "PlantCode");
             return View(new MonthlyManHours { Year = System.DateTime.Now.Year });
         }
 
@@ -27,7 +27,7 @@ namespace ITSB.AccidentDashboard.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Plants = new SelectList(_lookupRepo.GetPlants(), "Id", "Code", entry.PlantId);
+                ViewBag.Plants = new SelectList(_lookupRepo.GetPlants(), "Id", "PlantCode", entry.PlantId);
                 return View(entry);
             }
             _repo.Add(entry);
@@ -39,7 +39,7 @@ namespace ITSB.AccidentDashboard.Web.Controllers
         {
             var entry = _repo.GetById(id);
             if (entry == null) return HttpNotFound();
-            ViewBag.Plants = new SelectList(_lookupRepo.GetPlants(), "Id", "Code", entry.PlantId);
+            ViewBag.Plants = new SelectList(_lookupRepo.GetPlants(), "Id", "PlantCode", entry.PlantId);
             return View(entry);
         }
 
@@ -49,7 +49,7 @@ namespace ITSB.AccidentDashboard.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Plants = new SelectList(_lookupRepo.GetPlants(), "Id", "Code", entry.PlantId);
+                ViewBag.Plants = new SelectList(_lookupRepo.GetPlants(), "Id", "PlantCode", entry.PlantId);
                 return View(entry);
             }
             _repo.Update(entry);

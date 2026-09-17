@@ -25,7 +25,9 @@ namespace ITSB.AccidentDashboard.Web.Controllers
                 CasesByPlantGroup = data.CasesByPlantGroup.Select(g => new GroupCaseCount { DisplayName = g.DisplayName, Count = g.Count }).ToList(),
                 CasesByPlant = data.CasesByPlant.Select(p => new PlantCaseCount { PlantCode = p.PlantCode, Count = p.Count }).ToList(),
                 CasesByBodyPart = data.CasesByBodyPart.Select(b => new BodyPartCaseCount { Name = b.Name, Count = b.Count }).ToList(),
-                CasesByMonth = data.CasesByMonth
+                CasesByMonth = data.CasesByMonth,
+                RecordableCasesByMonth = data.RecordableCasesByMonth,
+                HoursWorkedByMonth = data.HoursWorkedByMonth
             };
             return View(vm);
         }

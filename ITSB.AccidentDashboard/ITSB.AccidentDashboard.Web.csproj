@@ -145,6 +145,7 @@
     <Compile Include="Models\AccidentIncidentViewModel.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Content\Images\favicon-512-2.png" />
     <Content Include="Views\BodyPart\Create.cshtml" />
     <Content Include="Views\BodyPart\Edit.cshtml" />
     <Content Include="Views\BodyPart\Delete.cshtml" />

@@ -30,7 +30,7 @@
                 <tr>
                     <td>@m.Year</td>
                     <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m.Month)</td>
-                    <td>@(m.Plant != null ? m.Plant.Code : "-")</td>
+                    <td>@(m.Plant != null ? m.Plant.PlantCode : "-")</td>
                     <td>@m.DirectLaborHeadcount</td>
                     <td>@m.DirectLaborHours.ToString("N0")</td>
                     <td>@m.IndirectLaborHeadcount</td>

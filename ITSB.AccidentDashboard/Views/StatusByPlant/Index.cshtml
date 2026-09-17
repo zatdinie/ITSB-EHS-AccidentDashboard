@@ -1,7 +1,16 @@
 ﻿@model IEnumerable<ITSB.AccidentDashboard.Core.Repositories.PlantStatusResult>
 @{ ViewBag.Title = "Status By Plant"; }
 
-<div class="esh-subheader">YEAR @ViewBag.Year | STATUS BY PLANT</div>
+<div class="esh-subheader dashboard-subheader">
+    <span>YEAR&nbsp;</span>
+    <select id="status-year" onchange="window.location.href = window.location.pathname + '?year=' + this.value;">
+        @for (int y = DateTime.Now.Year; y >= DateTime.Now.Year - 4; y--)
+        {
+            <option value="@y" selected="@(y == ViewBag.Year)">@y</option>
+        }
+    </select>
+    <span>&nbsp;| STATUS BY PLANT</span>
+</div>
 
 <div class="container-fluid" style="padding:20px;">
     <div class="chart-card">

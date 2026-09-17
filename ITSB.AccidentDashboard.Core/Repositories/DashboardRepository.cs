@@ -15,6 +15,8 @@ namespace ITSB.AccidentDashboard.Core.Repositories
         public List<PlantResult> CasesByPlant { get; set; }
         public List<BodyPartResult> CasesByBodyPart { get; set; }
         public List<int> CasesByMonth { get; set; }
+        public List<int> RecordableCasesByMonth { get; set; }
+        public List<int> HoursWorkedByMonth { get; set; }
     }
     public class GroupResult { public string DisplayName { get; set; } public int Count { get; set; } }
     public class PlantResult { public string PlantCode { get; set; } public int Count { get; set; } }
@@ -54,6 +56,14 @@ namespace ITSB.AccidentDashboard.Core.Repositories
                         .ToList(),
                     CasesByMonth = Enumerable.Range(1, 12)
                         .Select(m => incidents.Count(i => i.DateOfOccurrence.Month == m))
+                        .ToList(),
+                    RecordableCasesByMonth = Enumerable.Range(1, 12)
+                        .Select(m => incidents.Count(i => i.DateOfOccurrence.Month == m && i.IsRecordableCase))
+                        .ToList(),
+                    HoursWorkedByMonth = Enumerable.Range(1, 12)
+                        .Select(m => db.MonthlyManHours
+                            .Where(h => h.Year == year && h.Month == m)
+                            .Sum(h => (int?)(h.DirectLaborHours + h.IndirectLaborHours)) ?? 0)
                         .ToList()
                 };
             }

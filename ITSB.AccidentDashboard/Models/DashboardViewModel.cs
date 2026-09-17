@@ -13,6 +13,8 @@ namespace ITSB.AccidentDashboard.Web.Models
         public List<PlantCaseCount> CasesByPlant { get; set; }
         public List<BodyPartCaseCount> CasesByBodyPart { get; set; }
         public List<int> CasesByMonth { get; set; }
+        public List<int> RecordableCasesByMonth { get; set; }
+        public List<int> HoursWorkedByMonth { get; set; }
     }
 
     public class GroupCaseCount { public string DisplayName { get; set; } public int Count { get; set; }}

@@ -1,9 +1,41 @@
 ﻿@{ ViewBag.Title = "Master Data"; }
 <h2>Master Data</h2>
 <div class="row">
-    <div class="col-md-3"><div class="kpi-card">@Html.ActionLink("Plants", "Index", "Plant")</div></div>
-    <div class="col-md-3"><div class="kpi-card">@Html.ActionLink("Body Parts", "Index", "BodyPart")</div></div>
-    <div class="col-md-3"><div class="kpi-card">@Html.ActionLink("Accident Causes", "Index", "AccidentCause")</div></div>
-    <div class="col-md-3"><div class="kpi-card">@Html.ActionLink("Injury Types", "Index", "InjuryType")</div></div>
+<div class="esh-subheader">MASTER DATA</div>
+
+<div class="container-fluid master-data-page">
+    <div class="page-title-bar">
+        <div>
+            <h2>Master Data</h2>
+            <p>Maintain the reference data used across the dashboard.</p>
+        </div>
+    </div>
+
+    <div class="master-data-grid">
+        <a class="master-data-card" href="@Url.Action("Index", "Plant")">
+            <span class="master-data-card-title">Plants</span>
+            <span class="master-data-card-description">Manage plant codes and names.</span>
+            <span class="master-data-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="master-data-card" href="@Url.Action("Index", "BodyPart")">
+            <span class="master-data-card-title">Body Parts</span>
+            <span class="master-data-card-description">Manage injury body-part options.</span>
+            <span class="master-data-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="master-data-card" href="@Url.Action("Index", "AccidentCause")">
+            <span class="master-data-card-title">Accident Causes</span>
+            <span class="master-data-card-description">Manage accident cause options.</span>
+            <span class="master-data-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="master-data-card" href="@Url.Action("Index", "InjuryType")">
+            <span class="master-data-card-title">Injury Types</span>
+            <span class="master-data-card-description">Manage injury classification options.</span>
+            <span class="master-data-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="master-data-card" href="@Url.Action("Index", "MonthlyManHours")">
+            <span class="master-data-card-title">Man Hours Data</span>
+            <span class="master-data-card-description">Manage monthly hours worked.</span>
+            <span class="master-data-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+    </div>
 </div>
-<p style="margin-top:20px;">@Html.ActionLink("Manage Man Hours Data", "Index", "MonthlyManHours", null, new { @class = "btn btn-default" })</p>

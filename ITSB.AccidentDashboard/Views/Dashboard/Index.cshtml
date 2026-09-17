@@ -1,9 +1,20 @@
 ﻿@model ITSB.AccidentDashboard.Web.Models.DashboardViewModel
+@using System.Linq
 @{ ViewBag.Title = "Dashboard"; }
 
-<div class="esh-subheader">YEAR @Model.Year | DASHBOARD (ALL PLANT)</div>
+<div class="esh-subheader dashboard-subheader">
+    <span>YEAR&nbsp;</span>
+    <select id="dashboard-year" onchange="window.location.href = window.location.pathname + '?year=' + this.value;">
+        @for (int y = DateTime.Now.Year; y >= DateTime.Now.Year - 4; y--)
+        {
+            <option value="@y" selected="@(y == Model.Year)">@y</option>
+        }
+    </select>
+    <span>&nbsp;| DASHBOARD (ALL PLANT)</span>
+</div>
 
 <div class="container-fluid" style="padding:20px;">
+
     <div class="row">
         <div class="col-md-3"><div class="kpi-card"><div class="kpi-label">Total Accident Cases</div><div class="kpi-value">@Model.TotalAccidentCases</div></div></div>
         <div class="col-md-3"><div class="kpi-card"><div class="kpi-label">Total First Aid Injuries Case</div><div class="kpi-value highlight">@Model.TotalFirstAidCases</div></div></div>
@@ -11,6 +22,7 @@
         <div class="col-md-3"><div class="kpi-card"><div class="kpi-label">Total Recordable Work Injury & Illness</div><div class="kpi-value">@Model.TotalRecordableCases</div></div></div>
     </div>
     <br />
+
     <div class="row">
         @foreach (var g in Model.CasesByPlantGroup)
         {
@@ -20,38 +32,87 @@
         }
     </div>
     <br />
+
     <div class="row">
-        <div class="col-md-6"><div class="chart-card"><h4>Accident Case By Plant</h4><canvas id="chartByPlant"></canvas></div></div>
-        <div class="col-md-6"><div class="chart-card"><h4>Accident Analysis by Body Part</h4><canvas id="chartByBodyPart"></canvas></div></div>
+        <div class="col-md-3">
+            <div class="chart-card">
+                <h4>Accident Case By Plant</h4>
+                <div class="chart-wrap"><canvas id="chartByPlant"></canvas></div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="chart-card">
+                <h4>Accident Analysis by Body Part</h4>
+                <div class="chart-wrap"><canvas id="chartByBodyPart"></canvas></div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="chart-card">
+                <h4>Recordable Work Injury &amp; Illness</h4>
+                <div class="chart-wrap"><canvas id="chartRecordable"></canvas></div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="chart-card">
+                <h4>Total Hours Work (DL+IDL)</h4>
+                <div class="chart-wrap"><canvas id="chartHours"></canvas></div>
+            </div>
+        </div>
     </div>
     <br />
+
     <div class="row">
-        <div class="col-md-12"><div class="chart-card-dark"><h4>Total Accident Per Month</h4><canvas id="chartByMonth"></canvas></div></div>
+        <div class="col-md-12">
+            <div class="chart-card-dark">
+                <h4>Total Accident Per Month</h4>
+                <div class="chart-wrap"><canvas id="chartByMonth"></canvas></div>
+            </div>
+        </div>
     </div>
+
 </div>
 
 @section scripts {
 <script>
+    var commonOpts = { maintainAspectRatio: false, responsive: true };
+
     var plantLabels = @Html.Raw(Json.Encode(Model.CasesByPlant.Select(p => p.PlantCode)));
     var plantData = @Html.Raw(Json.Encode(Model.CasesByPlant.Select(p => p.Count)));
     new Chart(document.getElementById('chartByPlant'), {
         type: 'bar',
         data: { labels: plantLabels, datasets: [{ label: 'Cases', data: plantData, backgroundColor: '#5B9BD5' }] },
-        options: { indexAxis: 'y', plugins: { legend: { display: false } } }
+        options: Object.assign({}, commonOpts, { indexAxis: 'y', plugins: { legend: { display: false } } })
     });
 
     var bodyPartLabels = @Html.Raw(Json.Encode(Model.CasesByBodyPart.Select(b => b.Name)));
     var bodyPartData = @Html.Raw(Json.Encode(Model.CasesByBodyPart.Select(b => b.Count)));
     new Chart(document.getElementById('chartByBodyPart'), {
         type: 'doughnut',
-        data: { labels: bodyPartLabels, datasets: [{ data: bodyPartData, backgroundColor: ['#5B9BD5','#ED7D31','#A5A5A5','#FFC000','#4472C4'] }] }
+        data: { labels: bodyPartLabels, datasets: [{ data: bodyPartData, backgroundColor: ['#5B9BD5','#ED7D31','#A5A5A5','#FFC000','#4472C4'] }] },
+        options: Object.assign({}, commonOpts, { plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } })
     });
 
     var monthLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    new Chart(document.getElementById('chartRecordable'), {
+        type: 'bar',
+        data: { labels: monthLabels, datasets: [{ label: 'Cases', data: @Html.Raw(Json.Encode(Model.RecordableCasesByMonth)), backgroundColor: '#5B9BD5' }] },
+        options: Object.assign({}, commonOpts, { plugins: { legend: { display: false } } })
+    });
+
+    new Chart(document.getElementById('chartHours'), {
+        type: 'bar',
+        data: { labels: monthLabels, datasets: [{ label: 'Hours', data: @Html.Raw(Json.Encode(Model.HoursWorkedByMonth)), backgroundColor: '#5B9BD5' }] },
+        options: Object.assign({}, commonOpts, { indexAxis: 'y', plugins: { legend: { display: false } } })
+    });
+
     new Chart(document.getElementById('chartByMonth'), {
         type: 'line',
         data: { labels: monthLabels, datasets: [{ label: 'Cases', data: @Html.Raw(Json.Encode(Model.CasesByMonth)), borderColor: '#5B9BD5', backgroundColor: 'rgba(91,155,213,0.3)', fill: true, tension: 0.3 }] },
-        options: { scales: { x: { ticks: { color: '#fff' } }, y: { ticks: { color: '#fff' } } }, plugins: { legend: { labels: { color: '#fff' } } } }
+        options: Object.assign({}, commonOpts, {
+            scales: { x: { ticks: { color: '#fff' } }, y: { ticks: { color: '#fff' } } },
+            plugins: { legend: { labels: { color: '#fff' } } }
+        })
     });
 </script>
 }
