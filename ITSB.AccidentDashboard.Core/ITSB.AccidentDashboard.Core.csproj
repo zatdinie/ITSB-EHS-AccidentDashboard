@@ -63,11 +63,22 @@
     <Compile Include="Migrations\202609140624015_InitialCreate.Designer.cs">
       <DependentUpon>202609140624015_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202609170316460_AddLookupValidationConstraints.cs" />
+    <Compile Include="Migrations\202609170316460_AddLookupValidationConstraints.Designer.cs">
+      <DependentUpon>202609170316460_AddLookupValidationConstraints.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202609170405138_AddPlantGroupUniqueIndex.cs" />
+    <Compile Include="Migrations\202609170405138_AddPlantGroupUniqueIndex.Designer.cs">
+      <DependentUpon>202609170405138_AddPlantGroupUniqueIndex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AccidentAnalysisRepository.cs" />
+    <Compile Include="Repositories\AccidentCauseRepository.cs" />
     <Compile Include="Repositories\AccidentIncidentRepository.cs" />
+    <Compile Include="Repositories\BodyPartRepository.cs" />
     <Compile Include="Repositories\DashboardRepository.cs" />
+    <Compile Include="Repositories\InjuryTypeRepository.cs" />
     <Compile Include="Repositories\LookupRepository.cs" />
     <Compile Include="Repositories\LwrRepository.cs" />
     <Compile Include="Repositories\MonthlyManHoursRepository.cs" />
@@ -81,6 +92,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202609140624015_InitialCreate.resx">
       <DependentUpon>202609140624015_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202609170316460_AddLookupValidationConstraints.resx">
+      <DependentUpon>202609170316460_AddLookupValidationConstraints.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202609170405138_AddPlantGroupUniqueIndex.resx">
+      <DependentUpon>202609170405138_AddPlantGroupUniqueIndex.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,3 @@
-C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.csproj.AssemblyReference.cache
-C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.csproj.CoreCompileInputs.cache
 C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\bin\Debug\ITSB.AccidentDashboard.Core.dll.config
 C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\bin\Debug\ITSB.AccidentDashboard.Core.dll
 C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\bin\Debug\ITSB.AccidentDashboard.Core.pdb
@@ -7,8 +5,12 @@ C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashbo
 C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\bin\Debug\EntityFramework.xml
 C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.csproj.AssemblyReference.cache
+C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.Migrations.InitialCreate.resources
+C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.Migrations.AddLookupValidationConstraints.resources
+C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.csproj.GenerateResource.cache
+C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.csproj.CoreCompileInputs.cache
 C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.Acc.64D86DB5.Up2Date
 C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.dll
 C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.pdb
-C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.Migrations.InitialCreate.resources
-C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.csproj.GenerateResource.cache
+C:\Users\zatdinie54\source\repos\ITSB-EHS-Accident-Dashboard\ITSB.AccidentDashboard.Core\obj\Debug\ITSB.AccidentDashboard.Core.Migrations.AddPlantGroupUniqueIndex.resources

@@ -128,10 +128,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccidentAnalysisController.cs" />
+    <Compile Include="Controllers\AccidentCauseController.cs" />
     <Compile Include="Controllers\AccidentIncidentController.cs" />
+    <Compile Include="Controllers\BodyPartController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InjuryTypeController.cs" />
     <Compile Include="Controllers\LWRController.cs" />
+    <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\MonthlyManHoursController.cs" />
     <Compile Include="Controllers\PlantController.cs" />
     <Compile Include="Controllers\StatusByPlantController.cs" />
@@ -141,6 +145,19 @@
     <Compile Include="Models\AccidentIncidentViewModel.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Views\BodyPart\Create.cshtml" />
+    <Content Include="Views\BodyPart\Edit.cshtml" />
+    <Content Include="Views\BodyPart\Delete.cshtml" />
+    <Content Include="Views\AccidentCause\Create.cshtml" />
+    <Content Include="Views\AccidentCause\Delete.cshtml" />
+    <Content Include="Views\AccidentCause\Edit.cshtml" />
+    <Content Include="Views\AccidentCause\Index.cshtml" />
+    <Content Include="Views\InjuryType\Create.cshtml" />
+    <Content Include="Views\InjuryType\Delete.cshtml" />
+    <Content Include="Views\InjuryType\Edit.cshtml" />
+    <Content Include="Views\InjuryType\Index.cshtml" />
+    <None Include="Views\BodyPart\Index.cshtml" />
+    <Content Include="Views\MasterData\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />

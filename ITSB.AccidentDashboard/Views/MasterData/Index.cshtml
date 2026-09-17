@@ -1,0 +1,9 @@
+﻿@{ ViewBag.Title = "Master Data"; }
+<h2>Master Data</h2>
+<div class="row">
+    <div class="col-md-3"><div class="kpi-card">@Html.ActionLink("Plants", "Index", "Plant")</div></div>
+    <div class="col-md-3"><div class="kpi-card">@Html.ActionLink("Body Parts", "Index", "BodyPart")</div></div>
+    <div class="col-md-3"><div class="kpi-card">@Html.ActionLink("Accident Causes", "Index", "AccidentCause")</div></div>
+    <div class="col-md-3"><div class="kpi-card">@Html.ActionLink("Injury Types", "Index", "InjuryType")</div></div>
+</div>
+<p style="margin-top:20px;">@Html.ActionLink("Manage Man Hours Data", "Index", "MonthlyManHours", null, new { @class = "btn btn-default" })</p>

@@ -14,5 +14,16 @@ namespace ITSB.AccidentDashboard.Core
         public DbSet<InjuryType> InjuryTypes { get; set; }
         public DbSet<AccidentIncident> AccidentIncidents { get; set; }
         public DbSet<MonthlyManHours> MonthlyManHours { get; set; }
+
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<PlantGroup>().HasIndex(p => p.Label).IsUnique();
+        base.OnModelCreating(modelBuilder);
     }
+    
+    }
+
+    
+
 }
+
