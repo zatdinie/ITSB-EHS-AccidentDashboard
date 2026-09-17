@@ -209,6 +209,23 @@ body { background-color: var(--bg-light); font-family: 'Segoe UI', sans-serif; t
     margin-bottom: 0;
     white-space: normal;
 }
+.occupational-card-row > [class*="col-"] { display: flex; }
+.occupational-card-row .occupational-card {
+    box-sizing: border-box;
+    height: auto;
+    min-height: 420px;
+    overflow: visible;
+    width: 100%;
+}
+.occupational-table {
+    table-layout: fixed;
+    width: 100%;
+}
+.occupational-table th,
+.occupational-table td {
+    overflow-wrap: anywhere;
+    padding: 7px 4px;
+}
 .status-by-plant-page,
 .status-by-plant-page .table th,
 .status-by-plant-page .table td {
@@ -247,3 +264,23 @@ label { font-weight: 600; color: #333; }
 .label-success { background-color: var(--accent-green); color: #fff; }
 .label-warning { background-color: #ED7D31; color: #fff; }
 .label-danger  { background-color: #C0392B; color: #fff; }
+
+.analysis-toggle-bar {
+    background-color: var(--navy-dark);
+    padding: 24px;
+    text-align: center;
+}
+.analysis-toggle-bar h4 { color: #fff; margin-bottom: 16px; }
+.analysis-toggle-btn {
+    background-color: #C0392B;
+    color: #fff;
+    border: none;
+    padding: 16px 40px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 3px;
+    margin: 0 12px;
+    cursor: pointer;
+}
+.analysis-toggle-btn:hover { background-color: #A93226; }
+.analysis-toggle-btn.active { background-color: #E74C3C; box-shadow: 0 0 0 3px rgba(255,255,255,0.4); }

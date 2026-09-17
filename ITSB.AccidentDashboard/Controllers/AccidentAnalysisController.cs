@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using ITSB.AccidentDashboard.Core.Repositories;
+using ITSB.AccidentDashboard.Web.Models;
 
 namespace ITSB.AccidentDashboard.Web.Controllers
 {
@@ -12,7 +13,15 @@ namespace ITSB.AccidentDashboard.Web.Controllers
         {
             int y = year ?? DateTime.Now.Year;
             ViewBag.Year = y;
-            return View(_repo.GetAnalysis(y));
+
+            var vm = new AccidentAnalysisPageViewModel
+            {
+                Year = y,
+                CauseByPlant = _repo.GetCauseByPlantMatrix(y),
+                Occupational = _repo.GetAnalysis(y),
+                MonthlyInjury = _repo.GetInjuryTypeByMonth(y)
+            };
+            return View(vm);
         }
     }
 }
