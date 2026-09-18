@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using ITSB.AccidentDashboard.Core.Entities;
@@ -9,14 +10,30 @@ namespace ITSB.AccidentDashboard.Core.Repositories
     {
         public List<AccidentIncident> GetAll()
         {
+            return GetAll(null);
+        }
+
+        public List<AccidentIncident> GetAll(int? year)
+        {
             using (var db = new EshDbContext())
-                return db.AccidentIncidents
+            {
+                var query = db.AccidentIncidents.AsQueryable();
+
+                if (year.HasValue)
+                {
+                    var startDate = new DateTime(year.Value, 1, 1);
+                    var endDate = startDate.AddYears(1);
+                    query = query.Where(i => i.DateOfOccurrence >= startDate && i.DateOfOccurrence < endDate);
+                }
+
+                return query
                     .Include(i => i.Plant)
                     .Include(i => i.BodyPart)
                     .Include(i => i.AccidentCause)
                     .Include(i => i.InjuryType)
                     .OrderByDescending(i => i.DateOfOccurrence)
                     .ToList();
+            }
         }
 
         public AccidentIncident GetById(int id)

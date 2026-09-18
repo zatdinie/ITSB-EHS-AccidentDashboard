@@ -11,9 +11,11 @@ namespace ITSB.AccidentDashboard.Web.Controllers
         private readonly AccidentIncidentRepository _repo = new AccidentIncidentRepository();
         private readonly LookupRepository _lookupRepo = new LookupRepository();
 
-        public ActionResult Index()
+        public ActionResult Index(int? year)
         {
-            return View(_repo.GetAll());
+            int selectedYear = year ?? System.DateTime.Now.Year;
+            ViewBag.Year = selectedYear;
+            return View(_repo.GetAll(selectedYear));
         }
 
         public ActionResult Create()
