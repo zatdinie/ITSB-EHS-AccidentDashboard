@@ -5,9 +5,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - ITSB ESH Accident Dashboard</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/Style.css" rel="stylesheet" />
+    @Styles.Render("~/Content/accident/css")
+    @Scripts.Render("~/bundles/accident/modernizr")
+    <link href="~/Areas/ACCIDENT/Content/Style.css" rel="stylesheet" />
 </head>
 <body>
     @{
@@ -15,7 +15,7 @@
     Func<string, string> navClass = ctrl => currentController.Equals(ctrl, StringComparison.OrdinalIgnoreCase) ? "active" : "";
     }
     <div class="esh-header">
-        <img src="~/Content/images/favicon-512-2.png" alt="Company Logo" onerror="this.style.display='none'" />
+        <img src="~/Areas/ACCIDENT/Content/Images/favicon-512-2.png" alt="Company Logo" onerror="this.style.display='none'" />
         <div class="title">ITSB ESH<br />ACCIDENT DASHBOARD</div>
         <nav class="esh-nav" aria-label="Main navigation">
             <a href="@Url.Action("Index", "Dashboard")" class="@navClass("Dashboard")">Dashboard</a>
@@ -36,8 +36,8 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/accident/jquery")
+    @Scripts.Render("~/bundles/accident/bootstrap")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
