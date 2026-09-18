@@ -5,7 +5,8 @@ namespace ITSB.AccidentDashboard.Core
 {
     public class EshDbContext : DbContext
     {
-        public EshDbContext() : base("name=EshDb") { }
+        // Portal database (ESH); this module owns the ACCIDENT schema in it.
+        public EshDbContext() : base("name=DefaultConnection") { }
 
         public DbSet<Plant> Plants { get; set; }
         public DbSet<PlantGroup> PlantGroups { get; set; }
@@ -15,15 +16,12 @@ namespace ITSB.AccidentDashboard.Core
         public DbSet<AccidentIncident> AccidentIncidents { get; set; }
         public DbSet<MonthlyManHours> MonthlyManHours { get; set; }
 
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<PlantGroup>().HasIndex(p => p.Label).IsUnique();
-        base.OnModelCreating(modelBuilder);
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("ACCIDENT");
+            modelBuilder.Entity<PlantGroup>().HasIndex(p => p.Label).IsUnique();
+            base.OnModelCreating(modelBuilder);
+        }
     }
-    
-    }
-
-    
-
 }
 
