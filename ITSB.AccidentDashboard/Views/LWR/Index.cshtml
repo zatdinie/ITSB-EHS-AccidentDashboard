@@ -1,51 +1,146 @@
-﻿@using System.Linq
-@model System.Collections.Generic.List<ITSB.AccidentDashboard.Core.Repositories.MonthlyRate>
+﻿@model System.Collections.Generic.List<ITSB.AccidentDashboard.Core.Repositories.MonthlyRate>
+@using System.Linq
 @{ ViewBag.Title = "Lost Work Day Rate"; }
 
-<div class="esh-subheader dashboard-subheader">
-    <span>YEAR&nbsp;</span>
-    <select id="lwr-year" onchange="window.location.href = window.location.pathname + '?year=' + this.value;">
-        @for (int y = DateTime.Now.Year; y >= DateTime.Now.Year - 4; y--)
-        {
-            <option value="@y" selected="@(y == ViewBag.Year)">@y</option>
-        }
-    </select>
-    <span>&nbsp;| LOST WORK DAY RATE</span>
-</div>
+<div class="esh-subheader">LOST WORK DAY RATE (ALL PLANT)</div>
 
-<p>@Html.ActionLink("Manage Man Hours Data", "Index", "MonthlyManHours", null, new { @class = "btn btn-default" })</p>
 <div class="container-fluid" style="padding:20px;">
-    <div class="chart-card-dark">
-        <h4>Lost Workday Injury Rate (LWDI) By Month</h4>
-        <canvas id="chartLwdi"></canvas>
+    <p>@Html.ActionLink("Manage Man Hours Data", "Index", "MonthlyManHours", null, new { @class = "btn btn-default" })</p>
+
+    <div class="row lwr-table-row">
+        <div class="col-md-7">
+            <div class="content-card lwr-table-card">
+                <table class="table lwr-table">
+                    <tr>
+                        <th>Month</th>
+                        <th>Total Accident</th>
+                        <th>Lost Work Day Injury Cases</th>
+                        <th>Number of Workdays Lost</th>
+                        <th class="lwr-header-yellow">Severity Rate</th>
+                        <th>Target (10% Reduction Yearly)</th>
+                        <th class="lwr-header-blue">LWDI</th>
+                        <th class="lwr-header-green">TCIR</th>
+                    </tr>
+                    @foreach (var r in Model)
+                    {
+                        <tr>
+                            <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(r.Month)</td>
+                            <td>@r.TotalAccidents</td>
+                            <td>@r.LostWorkDayCases</td>
+                            <td>@r.LostWorkdaysCount</td>
+                            <td>@r.SeverityRate.ToString("0.00")</td>
+                            <td>@(r.TargetSeverityRate.HasValue ? r.TargetSeverityRate.Value.ToString("0.00") : "-")</td>
+                            <td>@r.Lwdi.ToString("0.00")</td>
+                            <td>@r.Tcir.ToString("0.00")</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="content-card lwr-table-card">
+                <table class="table lwr-table">
+                    <tr>
+                        <th>Month</th>
+                        <th>DL Headcount</th>
+                        <th>DL Hours Work</th>
+                        <th>IDL Headcount</th>
+                        <th>IDL Hours Work</th>
+                        <th>Total Hours Work</th>
+                        <th>Total H/C</th>
+                    </tr>
+                    @foreach (var r in Model)
+                    {
+                        <tr>
+                            <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(r.Month)</td>
+                            <td>@r.DLHeadcount</td>
+                            <td>@r.DLHours.ToString("N0")</td>
+                            <td>@r.IDLHeadcount</td>
+                            <td>@r.IDLHours.ToString("N0")</td>
+                            <td><strong>@r.TotalHours.ToString("N0")</strong></td>
+                            <td>@r.TotalHeadcount</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
     </div>
     <br />
-    <div class="chart-card">
-        <table class="table table-striped">
-            <tr><th>Month</th><th>Hours Worked</th><th>LWD Cases</th><th>Recordable Cases</th><th>LWDI</th><th>TCIR</th></tr>
-            @foreach (var r in Model)
-            {
-                <tr>
-                    <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(r.Month)</td>
-                    <td>@r.TotalHours</td>
-                    <td>@r.LostWorkDayCases</td>
-                    <td>@r.RecordableCases</td>
-                    <td>@r.Lwdi.ToString("0.00")</td>
-                    <td>@r.Tcir.ToString("0.00")</td>
-                </tr>
-            }
-        </table>
+
+    <div class="lwr-legend-box">
+        <div class="lwr-legend-label lwr-header-yellow">Injury Severity Rate</div>
+        <div class="lwr-legend-content">
+            The severity rate is a calculation that gives an average of the number of lost days per recordable incident.
+            <div class="formula">[ (Workdays Lost) &times; 200,000 ] / Total Hours Worked</div>
+        </div>
+    </div>
+    <div class="lwr-legend-box">
+        <div class="lwr-legend-label lwr-header-blue">Lost Work Day Injury Rate</div>
+        <div class="lwr-legend-content">
+            Measure of the total number of working days lost within a workplace due to occupational injury or illness.
+            <div class="formula">[ (LWD Cases) &times; 200,000 ] / Total Hours Worked</div>
+        </div>
+    </div>
+    <div class="lwr-legend-box">
+        <div class="lwr-legend-label lwr-header-green">Total Case Incident Rate</div>
+        <div class="lwr-legend-content">
+            Measure of the total number of incident cases relative to total working hours.
+            <div class="formula">[ (Total Accidents) &times; 200,000 ] / Total Hours Worked</div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="chart-card-dark" style="height:340px;">
+                <h4>Total Accident Per Month</h4>
+                <div class="chart-wrap"><canvas id="chartAccidentMonth"></canvas></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-card-dark" style="height:340px;">
+                <h4>LWDI (Lost Workday Injury Rate)</h4>
+                <div class="chart-wrap"><canvas id="chartLwdi"></canvas></div>
+            </div>
+        </div>
     </div>
 </div>
 
 @section scripts {
 <script>
-    var monthLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var lwdiData = @Html.Raw(Json.Encode(Model.Select(r => r.Lwdi)));
+    var commonOpts = { maintainAspectRatio: false, responsive: true };
+    var monthLabels = @Html.Raw(Json.Encode(Model.Select(r => System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(r.Month))));
+
+    new Chart(document.getElementById('chartAccidentMonth'), {
+        type: 'line',
+        data: {
+            labels: monthLabels,
+            datasets: [{
+                label: 'Total Accidents',
+                data: @Html.Raw(Json.Encode(Model.Select(r => r.TotalAccidents))),
+                borderColor: '#5B9BD5', backgroundColor: 'rgba(91,155,213,0.3)', fill: true, tension: 0.3
+            }]
+        },
+        options: Object.assign({}, commonOpts, {
+            scales: { x: { ticks: { color: '#fff' } }, y: { ticks: { color: '#fff' } } },
+            plugins: { legend: { labels: { color: '#fff' } } }
+        })
+    });
+
     new Chart(document.getElementById('chartLwdi'), {
         type: 'line',
-        data: { labels: monthLabels, datasets: [{ label: 'LWDI', data: lwdiData, borderColor: '#5B9BD5', backgroundColor: 'rgba(91,155,213,0.3)', fill: true, tension: 0.3 }] },
-        options: { scales: { x: { ticks: { color: '#fff' } }, y: { ticks: { color: '#fff' } } }, plugins: { legend: { labels: { color: '#fff' } } } }
+        data: {
+            labels: monthLabels,
+            datasets: [{
+                label: 'LWDI',
+                data: @Html.Raw(Json.Encode(Model.Select(r => r.Lwdi))),
+                borderColor: '#A5A5A5', backgroundColor: 'rgba(165,165,165,0.2)', fill: true, tension: 0.3
+            }]
+        },
+        options: Object.assign({}, commonOpts, {
+            scales: { x: { ticks: { color: '#fff' } }, y: { ticks: { color: '#fff' } } },
+            plugins: { legend: { labels: { color: '#fff' } } }
+        })
     });
 </script>
 }

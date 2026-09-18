@@ -14,41 +14,45 @@
         <div class="alert alert-success">@TempData["Success"]</div>
     }
 
-    <div class="content-card" style="overflow-x:auto;">
-        <table class="table">
+    <div class="content-card" style="overflow-x:auto; padding:0;">
+        <table class="table" style="margin-bottom:0;">
             <tr>
-                <th>Date</th>
-                <th>Worker</th>
+                <th style="width:40px; text-align:center;">No</th>
+                <th>Workers Name</th>
+                <th>IC / Passport No</th>
                 <th>Employee ID</th>
                 <th>Plant</th>
-                <th>Body Part</th>
-                <th>Cause</th>
-                <th>Injury Type</th>
-                <th>Case Type</th>
-                <th>Lost Days</th>
-                <th style="width:180px;"></th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Nationality</th>
+                <th>Employment Status</th>
+                <th>Date</th>
+                <th>Time of Occurrence</th>
+                <th style="min-width:300px;">How Accident Happened</th>
+                <th style="width:150px;"></th>
             </tr>
+            @{ int rowNum = 1; }
             @foreach (var i in Model)
             {
                 <tr>
-                    <td>@i.DateOfOccurrence.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:center;">@rowNum</td>
                     <td>@i.WorkerName</td>
-                    <td>@i.EmployeeId</td>
-                    <td>@(i.Plant != null ? i.Plant.PlantCode : "-")</td>
-                    <td>@(i.BodyPart != null ? i.BodyPart.Name : "-")</td>
-                    <td>@(i.AccidentCause != null ? i.AccidentCause.Description : "-")</td>
-                    <td>@(i.InjuryType != null ? i.InjuryType.Name : "-")</td>
-                    <td>
-                        @if (i.IsFirstAidCase) { <span class="label label-success">First Aid</span> }
-                        @if (i.IsLostWorkDayCase) { <span class="label label-warning">LWD</span> }
-                        @if (i.IsRecordableCase) { <span class="label label-danger">Recordable</span> }
-                    </td>
-                    <td>@i.LostWorkDays</td>
-                    <td>
+                    <td style="text-align:center;">@i.IcPassportNo</td>
+                    <td style="text-align:center;">@i.EmployeeId</td>
+                    <td style="text-align:center;">@(i.Plant != null ? i.Plant.PlantCode : "-")</td>
+                    <td style="text-align:center;">@(i.Gender == "Male" ? "M" : i.Gender == "Female" ? "F" : i.Gender)</td>
+                    <td style="text-align:center;">@i.Age</td>
+                    <td style="text-align:center;">@i.Nationality</td>
+                    <td style="text-align:center;">@i.EmploymentStatus</td>
+                    <td style="text-align:center;">@i.DateOfOccurrence.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align:center;">@i.TimeOfOccurrence.ToString(@"hh\:mm")</td>
+                    <td style="white-space:pre-line;">@i.HowAccidentHappened@(i.LostWorkDays > 0 ? "\nLost Work Day: " + i.LostWorkDays + " days MC" : "")</td>
+                    <td style="text-align:center;">
                         @Html.ActionLink("Edit", "Edit", new { id = i.Id }, new { @class = "btn btn-sm btn-default" })
                         @Html.ActionLink("Delete", "Delete", new { id = i.Id }, new { @class = "btn btn-sm btn-danger" })
                     </td>
                 </tr>
+                rowNum++;
             }
         </table>
     </div>
